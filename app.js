@@ -67,6 +67,26 @@ function initMap() {
 
         alert(`Punto seleccionado en el mapa:\nLatitud: ${lat.toFixed(6)}\nLongitud: ${lng.toFixed(6)}`);
     });
+    let marcadorTemporal;
+
+mapGlobal.addListener("click", function(event) {
+    const lat = event.latLng.lat();
+    const lng = event.latLng.lng();
+
+    document.getElementById("latitud").value = lat.toFixed(6);
+    document.getElementById("longitud").value = lng.toFixed(6);
+
+    // Si ya hay un marcador temporal, lo eliminamos
+    if(marcadorTemporal) marcadorTemporal.setMap(null);
+
+    // Creamos un nuevo marcador temporal
+    marcadorTemporal = new google.maps.Marker({
+        position: {lat: lat, lng: lng},
+        map: mapGlobal,
+        title: "Punto seleccionado"
+    });
+});
 }
+
 
 
